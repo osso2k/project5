@@ -4,6 +4,7 @@ import cors from 'cors'
 import dotenv from 'dotenv';
 import authRouter from "./routes/authRoutes";
 import wsServer from "./ws/wsServer";
+import { connectDB, createFavouritesTable, createUserTable, uuidGen } from './config/db';
 
 dotenv.config()
 
@@ -12,6 +13,12 @@ const PORT = process.env.PORT || 3030;
 
 app.use(express.json())
 app.use(cors())
+
+await connectDB()
+await uuidGen()
+await createUserTable()
+await createFavouritesTable()
+
 
 const server = http.createServer(app)
 wsServer(server)

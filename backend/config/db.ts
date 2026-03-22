@@ -8,14 +8,14 @@ export const pool = new Pool({
     database:process.env.DB_NAME,
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
-    password: process.env.DB_PASSWOR,
+    password: process.env.DB_PASSWORD,
     port: Number(process.env.DB_PORT)
 
 })
 export const connectDB = async ()=>{
     try {
         await pool.query(`SELECT 1;`)
-        console.log('DB Connected!\n');
+        console.log('\nDB Connected!');
     } catch (error) {
         console.log(`Error in connecting ro DB...`, (error as Error).message);
     }
@@ -29,17 +29,19 @@ export const uuidGen = async () => {
 }
 export const createUserTable = async ()=>{
     await pool.query(`CREATE TABLE IF NOT EXISTS users (
-            id UUID PRIMARY KEY DEFAULT gen_random_uuid()
-            username TEXT NOT NULL UNIQUE
-            hashedPassword TEXT UNIQUE NOT NULL
-            created_at TIMESTAMP DEFAUL NOW()
+            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            username TEXT NOT NULL UNIQUE,
+            hashedPassword TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT NOW()
         )`)
+    console.log("User Table created...");
 }
 
 export const createFavouritesTable = async ()=>{
     await pool.query(`CREATE TABLE IF NOT EXISTS favs (
-            id UUID PRIMARY KEY DEFAULT gen_random_uuid()
-            user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE
+            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
             symbol TEXT NOT NULL
         )`)
+    console.log("Favs Table created...\n");
 }
