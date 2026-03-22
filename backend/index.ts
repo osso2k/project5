@@ -4,6 +4,7 @@ import http from 'http'
 import cors from 'cors'
 import dotenv from 'dotenv';
 import authRouter from "./routes/authRoutes";
+import wsServer from "./ws/wsServer";
 
 dotenv.config()
 
@@ -14,7 +15,7 @@ app.use(express.json())
 app.use(cors())
 
 const server = http.createServer(app)
-
+wsServer(server)
 app.use('/api/auth',authRouter)
 
 server.listen(PORT, ()=>{
