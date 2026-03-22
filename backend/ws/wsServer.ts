@@ -1,6 +1,7 @@
+import type { Server } from "node:http";
 import { WebSocket, WebSocketServer } from "ws";
 
-const wsServer = (server)=>{
+const wsServer = (server: Server) => {
     const wss = new WebSocketServer({server})
 
     wss.on("connection", (socket)=>{
@@ -8,7 +9,7 @@ const wsServer = (server)=>{
             const message = data.toString()
             console.log({message});
 
-            wss.client.forEach((client)=>{
+            wss.clients.forEach((client)=>{
                 if (client.readyState == WebSocket.OPEN){
                     client.send(`Server Broadcast: ${message}`)
                 }
