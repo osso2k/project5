@@ -45,3 +45,14 @@ export const createFavouritesTable = async ()=>{
         )`)
     console.log("Favs Table created...\n");
 }
+
+export const messagesTable = async ()=>{
+    await pool.query(`CREATE TABLE IF NOT EXISTS messages (
+            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            sender_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+            receiver_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+            message TEXT NOT NULL ,
+            sent_at TIMESTAMP DEFAULT NOW()
+        )`)
+        console.log("Messages Table created...\n");
+}

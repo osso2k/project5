@@ -4,7 +4,7 @@ import cors from 'cors'
 import dotenv from 'dotenv';
 import authRouter from "./routes/authRoutes";
 import wsServer from "./ws/wsServer";
-import { connectDB, createFavouritesTable, createUserTable, uuidGen } from './config/db';
+import { connectDB, createFavouritesTable, createUserTable, messagesTable, uuidGen } from './config/db';
 
 dotenv.config()
 
@@ -18,6 +18,7 @@ await connectDB()
 await uuidGen()
 await createUserTable()
 await createFavouritesTable()
+await messagesTable()
 
 
 const server = http.createServer(app)
