@@ -23,6 +23,7 @@ await messagesTable()
 
 const server = http.createServer(app)
 wsServer(server)
+
 app.use('/api/auth',authRouter)
 
 server.listen(PORT, ()=>{
