@@ -31,7 +31,7 @@ export const createUserTable = async ()=>{
     await pool.query(`CREATE TABLE IF NOT EXISTS users (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             username TEXT NOT NULL UNIQUE,
-            hashedPassword TEXT NOT NULL,
+            hashed_password TEXT NOT NULL,
             created_at TIMESTAMP DEFAULT NOW()
         )`)
     console.log("User Table created...");
