@@ -43,7 +43,7 @@ export const createFavouritesTable = async ()=>{
             user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
             symbol TEXT NOT NULL
         )`)
-    console.log("Favs Table created...\n");
+    console.log("Favs Table created...");
 }
 
 export const messagesTable = async ()=>{
