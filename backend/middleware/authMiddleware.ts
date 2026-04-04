@@ -8,7 +8,7 @@ export const generateToken = (id:string)=>{
     const token = jwt.sign({id},process.env.JWT_SECRET!,{expiresIn:"24h"})
     return token
 }
-export const verifyUser = (req:Request,res:Response, next:NextFunction)=>{
+export const protectedRoute = (req:Request,res:Response, next:NextFunction)=>{
     const authHeader = req.headers.authorization
 
     if (!authHeader || !authHeader.startsWith("Bearer ")){

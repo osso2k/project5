@@ -1,14 +1,9 @@
 import {Router} from 'express'
+import { getuser, login, signup } from '../controllers/authController'
 
 const authRouter = Router()
-authRouter.get('/user', (_req, res) => {
-  res.status(501).json({ message: 'Not implemented' })
-})
-authRouter.post('/signup', (_req, res) => {
-  res.status(501).json({ message: 'Not implemented' })
-})
-authRouter.post('/login', (_req, res) => {
-  res.status(501).json({ message: 'Not implemented' })
-})
+authRouter.get('/user',getuser)
+authRouter.post('/signup',signup)
+authRouter.post('/login', login)
 
 export default authRouter

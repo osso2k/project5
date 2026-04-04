@@ -1,6 +1,7 @@
 import { Request , Response } from "express"
 import { pool } from "../config/db"
 import bcrypt from "bcrypt"
+import { generateToken } from "../middleware/authMiddleware"
 
 interface User {
     username: string,
@@ -38,7 +39,8 @@ export const signup = async (req: Request<{},{},User> ,res:Response) =>{
 
         const user = await pool.query("INSERT INTO users (username , hashed_password) VALUES ($1,$2) RETURNING id",[username, hashedPassword])
         //const token = //gen token wioth id
-        res.status(201).json({message:"User Created Successfully!",user:user.rows[0].id /*,token*/})
+        const token = generateToken(user.rows[0].id)
+        res.status(201).json({message:"User Created Successfully!",user:user.rows[0].id ,token})
     } catch (error) {
         res.status(500).json({message:"Something went wrong in signing up...",err:(error as Error).message})
     }
@@ -60,7 +62,8 @@ export const login = async (req:Request<{},{},User>,res:Response)=>{
             return res.status(401).json({message:"Invalid credentials"})
         }
         //gen token
-        res.json({message:"Successfully logged in!", user:user.rows[0].id /* , token */ })
+        const token= generateToken(user.rows[0].id)
+        res.json({message:"Successfully logged in!", user:user.rows[0].id  , token })
     } catch (error) {
         res.status(500).json({message:"Something went wrong in logging in...", err: (error as Error).message})
     }
