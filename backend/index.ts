@@ -7,7 +7,7 @@ import wsServer from "./ws/wsServer";
 import { connectDB, createFavouritesTable, createUserTable, messagesTable, uuidGen } from './config/db';
 import { apiServer } from './ws/api';
 import { protectedRoute } from './middleware/authMiddleware';
-import appRouter from './routes/appRoutes';
+import favsRouter from './routes/favsRoutes';
 
 dotenv.config()
 
@@ -28,7 +28,7 @@ const server = http.createServer(app)
 wsServer(server)
 apiServer()
 app.use('/api/auth',authRouter)
-app.use('/api/app',protectedRoute,appRouter)
+app.use('/api/app',protectedRoute,favsRouter)
 server.listen(PORT, ()=>{
     console.log(`Server is Live on port: ${PORT}`);
 })
