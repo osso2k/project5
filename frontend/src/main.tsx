@@ -4,7 +4,7 @@ import './index.css'
 import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
-  <div className='flex min-h-screen w-full bg-[hsl(0,0%,12%)] text-zinc-500'>
+  <div className='flex min-h-screen w-full bg-[hsl(280,26%,9%)] text-white'>
   <StrictMode>
     <App />
   </StrictMode>
