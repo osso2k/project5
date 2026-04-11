@@ -2,7 +2,7 @@ import type { Server } from "node:http";
 import { WebSocket, WebSocketServer } from "ws";
 
 const wsServer = (server: Server) => {
-    const wss = new WebSocketServer({server})
+    const wss = new WebSocketServer({server, maxPayload: 1024 * 1024})
 
     wss.on("connection", (socket)=>{
         socket.on("message",(data)=>{
@@ -11,7 +11,7 @@ const wsServer = (server: Server) => {
 
             wss.clients.forEach((client)=>{
                 if (client.readyState == WebSocket.OPEN){
-                    client.send(`Server Broadcast: ${message}`)
+                    client.send(JSON.stringify({type:"broadcast" ,message:`Server Broadcast: ${message}`}))
                 }
             })
         })
@@ -22,6 +22,7 @@ const wsServer = (server: Server) => {
             console.log(`Server Disconnected...`);
         })
     })
+    return wss
 }
 
 export default wsServer

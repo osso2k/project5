@@ -25,8 +25,8 @@ await messagesTable()
 
 
 const server = http.createServer(app)
-wsServer(server)
-apiServer()
+const wss = wsServer(server)
+apiServer(wss)
 app.use('/api/auth',authRouter)
 app.use('/api/app',protectedRoute,favsRouter)
 server.listen(PORT, ()=>{
