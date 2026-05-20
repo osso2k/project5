@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-
+import api from "../api";
+import toast from "react-hot-toast";
 interface Form {
     username:string;
     password:string;
@@ -8,8 +9,35 @@ interface Form {
 
 const Signup = () => {
     const navigate = useNavigate()
-    const [loading,setLoading] = useState<boolean>(false);
+    // const [loading,setLoading] = useState<boolean>(false);
     const [form,setForm] = useState<Form>({username:"" , password:""})
+
+    const handleChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
+        setForm(prev => ({...prev, [e.target.name]: e.target.value}))
+    }
+    const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        try {
+            if (form.username == "" || form.username.length < 4){
+                toast.error("username too short")
+                return
+            }else if (form.password.length < 6){
+                toast.error("password too  short")
+                return 
+            } 
+            const response = await api.post("/api/auth/signup",form)
+            toast.success("Signed up!")
+
+            localStorage.setItem("userId", response.data.user)
+            localStorage.setItem("token", response.data.token)
+
+            navigate("/")
+
+        } catch (error) {
+            console.log("Error in sending user data to server...", (error as Error).message);
+        }
+    }
+
   return (
     <div className="flex w-full h-full mt-40">
         <div className="flex flex-col flex-wrap mx-auto h-[500px] w-[40%] shadow shadow-zinc-800 rounded-lg ">
@@ -17,24 +45,21 @@ const Signup = () => {
                 <h1 className="font-minecraft text-2xl pt-12 pl-10">Forkymarket</h1>
                 <p className="font-mono text-lg my-auto pt-7 pr-10  text-zinc-600">Sign up</p>
             </div>
-                <button onClick={()=>{navigate("/")}}>home</button>
-                  <button onClick={()=>{navigate("/signup")}}>signup</button>
-                  <button onClick={()=>{navigate("/login")}}>login</button>
         <div className="pt-24 flex flex-col flex-wrap">
-            <form action="">
+            <form onSubmit={handleSubmit} action="">
                 <div className="flex pl-[20%] p-1">  
                     <label className="font-minecraft my-auto pr-3" >username: </label>
-                    <input className="text-black text-lg pl-2 h-10 border border-black w-[50%] bg-white rounded-lg" type="text" />
+                    <input onChange={handleChange} value={form.username} name="username" className="text-black text-lg pl-2 h-10 border border-black w-[50%] bg-white rounded-lg" type="text" />
                 </div>
                 <div className="flex pl-[20%] p-1">  
                     <label className="font-minecraft my-auto pr-3" >password: </label>
-                    <input className="text-black text-lg pl-2 h-10 border border-black w-[50%] bg-white rounded-lg" type="text" />
+                    <input onChange={handleChange} value={form.password} name="password" className="text-black text-lg pl-2 h-10 border border-black w-[50%] bg-white rounded-lg" type="password" />
                 </div>
-                <button className="flex mx-auto mt-2 mr-60 pt-2 text-xl rounded-2xl px-6 cursor-pointer my-auto py-1 text-center font-minecraft border" type="submit">signup</button>
+                <button className="flex mx-auto mt-2 pt-2 text-xl rounded-2xl px-6 cursor-pointer my-auto py-1 text-center font-minecraft border bg-purple-900/45" type="submit">signup</button>
             </form>
             <div className="text-white text-lg text-center">
             <p className=" pt-10 ">Already have an account?</p>
-            <span className="font-minecraft font-semibold cursor-pointer"> Log in.</span>
+            <span onClick={()=>{navigate("/login")}} className="font-minecraft font-semibold cursor-pointer"> Log in.</span>
             </div>
         </div>
         </div>

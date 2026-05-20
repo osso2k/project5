@@ -5,11 +5,13 @@ import './index.css'
 import App from './App.tsx'
 import Signup from './pages/Signup.tsx'
 import Login from './pages/Login.tsx'
+import { Toaster } from 'react-hot-toast'
 
 createRoot(document.getElementById('root')!).render(
   <div className='flex min-h-screen w-full bg-[hsl(280,26%,9%)] text-white'>
   <StrictMode>
     <BrowserRouter >
+    <Toaster />
       <Routes>
         <Route path='/' element={<App />} />
         <Route path='/signup' element={<Signup />} />
