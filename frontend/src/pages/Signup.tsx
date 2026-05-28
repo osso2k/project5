@@ -34,7 +34,7 @@ const Signup = () => {
             navigate("/")
 
         } catch (error) {
-            console.log("Error in sending user data to server...", (error as Error).message);
+            console.log("Error in sending user data to server... (signup)", (error as Error).message);
         }
     }
 

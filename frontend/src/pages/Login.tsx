@@ -24,10 +24,17 @@ const Login = () => {
                 return
             }
             const response = await api.post("/api/auth/login", form)
-            toast.success("Logged in!")
-            
-            localStorage.setItem("userId", response.data.user)
-            localStorage.setItem("token", response.data.token)
+            if(response){
+                toast.success("Logged in!")
+                localStorage.setItem("userId", response.data.user)
+                localStorage.setItem("token", response.data.token)
+                navigate("/")
+                return
+            }else{
+                toast.error("Invalid Credentials..")
+                console.error("User not found");
+                return
+            }            
 
         } catch (error) {
             console.log("Error in sending user data to server... (login)", (error as Error).message);
