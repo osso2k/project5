@@ -12,6 +12,7 @@ api.interceptors.request.use((config)=>{
     return config
 }, (error)=>{
     console.log("Invalid token");
+    window.location.href = "/login"
     return Promise.reject(error)
 })
 api.interceptors.response.use((response)=>{
