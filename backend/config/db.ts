@@ -41,7 +41,8 @@ export const createFavouritesTable = async ()=>{
     await pool.query(`CREATE TABLE IF NOT EXISTS favs (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-            symbol TEXT NOT NULL
+            symbol TEXT NOT NULL,
+            UNIQUE(user_id, symbol)
         )`)
     console.log("Favs Table created...");
 }
