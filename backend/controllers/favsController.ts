@@ -44,3 +44,6 @@ export const removeFav = async (req: Request,res: Response)=>{
         res.status(500).json({message: "Internal Server Error", err: (error as Error).message})
     }
 }
+// export const showFavsPrices = async (req:Request, res: Response) =>{
+    
+// }
