@@ -2,7 +2,7 @@ import { WebSocket, WebSocketServer } from "ws";
 
 
 export const apiServer = async (wss:WebSocketServer) =>{
-    const COINS = ["btcusdt","ethusdt","bnbusdt","solusdt","xrpusdt","dogeusdt","adausdt","avaxusdt","linkusdt","dotusdt"]
+    const COINS = ["btcusdt","ethusdt","bnbusdt","solusdt","xrpusdt","dogeusdt","adausdt"]
     const prices: Record<string , string> = {}
 
     const streams = COINS.map(c => `${c}@trade`).join("/")
