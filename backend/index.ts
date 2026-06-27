@@ -8,6 +8,7 @@ import { connectDB, createFavouritesTable, createUserTable, messagesTable, uuidG
 import { apiServer } from './ws/api';
 import { protectedRoute } from './middleware/authMiddleware';
 import favsRouter from './routes/favsRoutes';
+import newsRouter from './routes/newsRoutes';
 
 dotenv.config()
 
@@ -29,6 +30,7 @@ const wss = wsServer(server)
 apiServer(wss)
 app.use('/api/auth',authRouter)
 app.use('/api/app',protectedRoute,favsRouter)
+app.use('/api/news', protectedRoute, newsRouter)
 server.listen(PORT, ()=>{
     console.log(`Server is Live on port: ${PORT}`);
 })

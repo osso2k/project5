@@ -9,7 +9,7 @@ const DisplayTop7 = () => {
       {sortedPrices ? sortedPrices.map(([symbol , price ]) =>(
         <div className="flex w-full justify-between my-auto" key={symbol}>
           <span className="text-2xl">{symbol.slice(0,3)}</span>
-          <span className="font-sans text-xl">{Number(price)}</span>
+          <span className="flex min-w-[50%] font-sans text-xl">${Number(price)}</span>
         </div>
       )) : <><div>Hey</div></>}
     </div>
