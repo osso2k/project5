@@ -5,9 +5,10 @@ const DisplayTop7 = () => {
   const prices = usePricesStore()
   const sortedPrices = Object.entries(prices).sort(([,a],[,b]) => Number(b) - Number(a))
   return (
-    <div className="flex w-[70%] flex-col flex-wrap font-serif">
+    <div className="flex w-[70%] flex-col flex-wrap font-serif mt-7">
+      <h1 className="text-center text-2xl mb-9 border-b border-zinc-600 pb-3">Ones to Look out for</h1>
       {sortedPrices ? sortedPrices.map(([symbol , price ]) =>(
-        <div className="flex w-full justify-between my-auto" key={symbol}>
+        <div className="flex w-full justify-between my-1" key={symbol}>
           <span className="text-2xl">{symbol.slice(0,3)}</span>
           <span className="flex min-w-[50%] font-sans text-xl">${Number(price)}</span>
         </div>

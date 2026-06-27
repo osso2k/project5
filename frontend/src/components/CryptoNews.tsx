@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import api from "../api"
 import {motion , AnimatePresence } from "motion/react"
+import { Link } from "react-router-dom";
 
 interface News {
   id: number;
@@ -13,6 +14,8 @@ interface News {
 const CryptoNews = () => {
   const [news, setNews] = useState<News[]>([])
   const [startIndex, setStartIndex] = useState(0)
+
+
   useEffect(()=>{
     const getNews = async () =>{
         try {
@@ -30,14 +33,14 @@ const CryptoNews = () => {
     }
     const inteval = setInterval(()=>{
       setStartIndex(prev => (prev + 2) % news.length)
-    }, 5000)
+    }, 7500)
 
     return () => clearInterval(inteval)
   },[news])
   const visibleNews = [news[startIndex], news[(startIndex + 1) % news.length],].filter(Boolean)
   return (
-    <div>
-      {news.length > 0 ? <><div className="overflow-hidden h-32">
+    <div className="max-h-full flex flex-fit w-full ">
+      {news.length > 0 ? <><div className="">
       <AnimatePresence mode="wait">
         <motion.div
           key={startIndex}
@@ -52,12 +55,18 @@ const CryptoNews = () => {
           {visibleNews.map((item) => (
             <div
               key={item.id}
-              className="mb-3 rounded-lg border p-3"
+              className="mb-3 rounded-lg p-3"
             >
               <h3 className="font-semibold">{item.headline}</h3>
-              <p>{item.summary}</p>
-              <p>{item.datetime}</p>
-              <p>{item.url}</p>
+              <p className="text-xm">
+                {new Date(item.datetime * 1000).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "2-digit"
+                })}
+              </p>
+              <Link className="px-4 py-1 rounded font-bold font-minecraft bg-zinc-600 " to={item.url} target="_blank">Go</Link>
             </div>
           ))}
         </motion.div>
