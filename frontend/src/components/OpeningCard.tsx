@@ -1,3 +1,4 @@
+import CryptoNews from "./CryptoNews"
 import DisplayTop7 from "./DisplayTop7"
 
 
@@ -9,7 +10,7 @@ const OpeningCard = () => {
         <div className="order-2 flex justify-center my-auto h-full ">
           <div className="grid grid-rows-2 w-full justify-center">
             <div className="order-1 h-[95%] w-full ">top</div>
-            <div className="order-2 h-[50%]">bottom</div>
+            <div className="order-2 h-[50%]">{<CryptoNews />}</div>
           </div>
         </div>
       </div>

@@ -37,7 +37,7 @@ const CryptoNews = () => {
   const visibleNews = [news[startIndex], news[(startIndex + 1) % news.length],].filter(Boolean)
   return (
     <div>
-      {news ? <><div className="overflow-hidden h-32">
+      {news.length > 0 ? <><div className="overflow-hidden h-32">
       <AnimatePresence mode="wait">
         <motion.div
           key={startIndex}
