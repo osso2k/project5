@@ -44,9 +44,9 @@ const CryptoNews = () => {
       <AnimatePresence mode="wait">
         <motion.div
           key={startIndex}
-          initial={{ y: 40, opacity: 0 }}
+          initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -80, opacity: 0 }}
+          exit={{ y: -30, opacity: 0 }}
           transition={{
             duration: 0.6,
             ease: "easeInOut",

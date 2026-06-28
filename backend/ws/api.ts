@@ -3,19 +3,25 @@ import { WebSocket, WebSocketServer } from "ws";
 
 export const apiServer = async (wss:WebSocketServer) =>{
     // const COINS = ["btcusdt","ethusdt","bnbusdt","solusdt","xrpusdt","dogeusdt","adausdt"]
-    const prices: Record<string , {price:string; changePct: string}> = {}
+    let prices: Record<string , {price:string; changePct: string}> = {}
 
     // const streams = COINS.map(c => `${c}@trade`).join("/")
-    const ws = new WebSocket(`wss://stream.binance.com:9443/ws/!ticker@arr`)
+    const ws = new WebSocket(`wss://stream.binance.com:9443/ws/!miniTicker@arr`)
     ws.on("open", ()=>{
         console.log("binance is connected!")
     })
 
     ws.on("message",(msg:Buffer | string)=>{
         const tickers = JSON.parse(msg.toString())
+        const full: Record<string, any> = {} 
         tickers.forEach((t: any)=>{
-            prices[t.s] = {price: t.c, changePct: t.P }
+            if (!t.s.endsWith("USDT")) return;
+            const changePct = ((Number(t.c) - Number(t.o)) / Number(t.o) * 100).toFixed(2)
+            full[t.s] = {price: t.c, changePct: changePct, volume: t.q}
         })
+        prices = Object.fromEntries(
+            Object.entries(full).sort(([,a ], [, b]) => Number(b.volume) - Number(a.volume))
+        )
     })
     setInterval(()=>{
         if (Object.keys(prices).length === 0) return

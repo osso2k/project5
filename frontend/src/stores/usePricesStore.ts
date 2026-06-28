@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { socket } from "../socket"
 
 export const usePricesStore = ()=>{
-    const [prices, setPrices] = useState<Record<string, {price: string, changePct: string}>>({})
+    const [prices, setPrices] = useState<Record<string, {price: string, changePct: string, volume: string}>>({})
     useEffect(()=>{
         const handleMessages = (msg: MessageEvent)=>{
             const parsed = JSON.parse(msg.data)
