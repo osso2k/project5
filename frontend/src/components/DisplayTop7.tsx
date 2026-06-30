@@ -3,7 +3,7 @@ import { usePricesStore } from "../stores/usePricesStore"
 
 const DisplayTop7 = () => {
   const prices = usePricesStore()
-  const sortedPrices = Object.entries(prices).sort(([,a],[,b]) => Number(b.volume) - Number(a.volume)).slice(0,7)
+  const sortedPrices = Object.entries(prices).sort(([,a],[,b]) => Number(b.volume) - Number(a.volume)).slice(0,7).sort(([,a], [,b])=> Number(b.price) - Number(a.price))
   return (
     <div className="flex w-[70%] flex-col flex-wrap font-serif mt-7">
       <h1 className="text-center text-2xl mb-9 border-b border-zinc-600 pb-3">Ones to Look out for</h1>
